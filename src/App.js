@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import TodoForm from './components/TodoComponents/TodoForm';
 import TodooList from './components/TodoComponents/TodoList';
+import uuid from 'uuid';
 
 const todoList = [
   {
@@ -34,12 +35,19 @@ class App extends Component {
     });
   }
 
+  createNewTodo = () => {
+    if(!this.state.todoItems.find(todo => todo.task === this.state.newItemText)){
+      this.setState({todoItems: [...this.state.todoItems, {task: this.state.newItemText, id: uuid(), completed: false}]});
+      this.setState({newItemText: ""})
+    }
+  }
+
 
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <TodoForm value={this.state.newItemText} onChange={this.updateTextValue}/>
+        <TodoForm value={this.state.newItemText} onChange={this.updateTextValue} createNewTodo={this.createNewTodo}/>
         <TodooList todos={this.state.todoItems}/>
       </div>
     );
