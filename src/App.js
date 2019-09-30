@@ -25,7 +25,8 @@ class App extends Component {
     super (props);
       this.state = {
         newItemText: "",
-        todoItems: todoList
+        todoItems: todoList,
+        searchItem: ""
       }
   }
 
@@ -52,6 +53,13 @@ class App extends Component {
 
   clearCompleted = () => this.setState({todoItems: this.state.todoItems.filter(item => item.completed === false)})
 
+  updateSearchValue = (event) => {
+    this.setState({
+      searchItem: event.target.value
+    });
+    this.setState({todoItems: this.state.todoItems.filter(item => item.task.toLowerCase().includes(this.state.searchItem.toLowerCase()))})
+  }
+
 
   render() {
     return (
@@ -63,6 +71,8 @@ class App extends Component {
         onChange={this.updateTextValue} 
         createNewTodo={this.createNewTodo} 
         clearCompleted={this.clearCompleted}
+        searchValue={this.state.searchItem}
+        searchChange={this.updateSearchValue}
         />
 
         <TodoList 
