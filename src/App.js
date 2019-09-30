@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import TodoForm from './components/TodoComponents/TodoForm';
-import TodooList from './components/TodoComponents/TodoList';
+import TodoList from './components/TodoComponents/TodoList';
 import uuid from 'uuid';
 
 const todoList = [
   {
     task: 'Organize Garage',
     id: 1528817077286,
-    completed: false
+    completed: true
   },
   {
     task: 'Bake Cookies',
@@ -42,13 +42,33 @@ class App extends Component {
     }
   }
 
+  toggleTodo = (todo) => {
+    this.setState({todoItems: this.state.todoItems.map(item =>
+      item.task === todo.task ? {...item, completed: !item.completed} : item
+    )})
+  }
+
+  // clearCompleted = () => this.state.todoItems.filter(item => item.completed === true ? this.setState({todoItems: this.state.todoItems.map()}) :);
+
+  clearCompleted = () => this.setState({todoItems: this.state.todoItems.filter(item => item.completed === false)})
+
 
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <TodoForm value={this.state.newItemText} onChange={this.updateTextValue} createNewTodo={this.createNewTodo}/>
-        <TodooList todos={this.state.todoItems}/>
+
+        <TodoForm 
+        value={this.state.newItemText} 
+        onChange={this.updateTextValue} 
+        createNewTodo={this.createNewTodo} 
+        clearCompleted={this.clearCompleted}
+        />
+
+        <TodoList 
+        todos={this.state.todoItems} 
+        toggleTodo={this.toggleTodo}
+        />
       </div>
     );
   }

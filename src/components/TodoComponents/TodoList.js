@@ -8,10 +8,10 @@ class TodoList extends Component {
     
 
   render() {
-      const {todos} = this.props;
+      const {todos, toggleTodo} = this.props;
     return (
       <div>
-        <Todo todos={todos}/>
+        <Todo todos={todos} toggleTodo={toggleTodo}/>
       </div>
     );
   }
